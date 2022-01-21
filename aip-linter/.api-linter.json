@@ -1,0 +1,12 @@
+[
+  {
+    "disabled_rules": [
+      "0127"
+    ],
+    "enabled_rules": [
+    ],
+    "included_paths": [
+      "**/*"
+    ]
+  }
+]

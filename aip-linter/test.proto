@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package alis.os.resources.events.v1;
+
+// import "google/api/annotations.proto";
+// import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/my-repo/v1";
+
+// publisher
+service publisher {
+  // Creates a ServicePublishedEvent
+  // rpc PublishServicePublishedEvent (ServicePublishedEvent) returns (ServicePublishedEvent) {
+    // option (google.api.http) = {
+      // post: "/resources/events/v1/publisher/service_published_event:publish"
+      // body: "*"
+    // };
+  // }
+}
+
+// Definition of event type: alis.os.resources.events.v1.serviceUpdated
+message ServicePublishedEvent {
+  // Output only. Id of this message, assigned by the server when the message
+  // is published.
+  // Guaranteed to be unique within the topic. This value may be read by a
+  // subscriber that receives a PubSubMessage via a pull call or a push
+  // delivery. It must not be populated by the publisher in a publish call.  
+  string message_id = 1;
+
+  // Output only. The time at which the message was published, populated by
+  // the server when it receives the publish call. It must not be populated
+  // by the publisher in the publish call.
+  // google.protobuf.Timestamp publish_time = 2;
+
+  // Output only. Channel event types.
+  // Format: alis.os.resources.events.v1.servicePublished
+  string type = 3;
+
+  // Output only. Event deployment source.
+  // Format: projects/{project}
+  string source = 4;
+
+  // Fully qualified resource id within the api
+  // Format:
+  // domains/{domain}/contracts/{contract}/neurons/{neuron}/versions/{version}
+  string subject = 5;
+}
