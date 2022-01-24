@@ -65,7 +65,6 @@ class AIPLinter {
         if (stderr !== "") {
             return [stderr, "err"];
         }
-
         return [stdout, "out"]
     }
 
@@ -89,9 +88,11 @@ class AIPLinter {
             command = `api-linter --config ${apiPath}.yaml --output-format "json" ${this.codeDocument.uri.fsPath}`  
         }
         
-        // .api-linter.json/yaml file not found
+        // The .api-linter.json/yaml file not found. If not found, 
+        // run with default configuration and show an error message.
         if (!command) {
             vscode.window.showErrorMessage("AIP Linter: Ensure you have .api-linter.json or .api-linter.yaml in the root directory of your project.")
+            command = `api-linter --output-format "json" ${this.codeDocument.uri.fsPath}` 
             return;
         }
         return command;

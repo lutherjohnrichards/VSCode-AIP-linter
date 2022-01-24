@@ -57,9 +57,6 @@ async function activate(context) {
 	vscode.workspace.onDidChangeTextDocument((e) => {
 		vscode.commands.executeCommand('aip-linter.api-linter');
 	});
-
-	
-
 }
 
 /**
