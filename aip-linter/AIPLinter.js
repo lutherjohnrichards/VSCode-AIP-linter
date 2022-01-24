@@ -76,7 +76,10 @@ class AIPLinter {
      * @returns command to be executed 
      */
     checkAIPExists () {
-        var apiPath = __dirname + "/.api-linter"
+        // var apiPath = __dirname + "/.api-linter"
+
+        var apiPath = vscode.workspace.workspaceFolders[0].uri.fsPath + "/.api-linter";
+        console.log(apiPath)
 
         // Check for the .api-linter file in project root. If found, 
         // point to the config file, configure the output of the 
