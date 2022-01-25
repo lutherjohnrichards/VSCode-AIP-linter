@@ -103,7 +103,7 @@ async function driveLint(doc, collection) {
 	const errors = await linter.lint();
 	// map the errors detected to new vscode diagnostics which can then be mapped to the editor.
 	const diagnostics = errors.map(err => {
-		return new vscode.Diagnostic(err.range, err.proto.reason + "\n" + err.proto.ruleID + "\n" + err.proto.ruleDocURI, vscode.DiagnosticSeverity.Warning)
+		return new vscode.Diagnostic(err.range, err.proto.reason + "\n" + err.proto.ruleID + "\n" + err.proto.ruleDocURI + "\nDisable: (-- api-linter: " + err.proto.ruleID + "=disabled --)", vscode.DiagnosticSeverity.Warning)
 	});
 	collection.clear()
 	collection.set(doc.uri, diagnostics)
