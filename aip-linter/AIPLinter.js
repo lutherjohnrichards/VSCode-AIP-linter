@@ -37,7 +37,7 @@ class AIPLinter {
             // JSON output
             lintingErrors = this.parseWarnings(await result[0]);
         } else {
-            return []
+            lintingErrors = [this.parseErrors(await result[0])]
         }
         return lintingErrors;
     }
@@ -59,7 +59,8 @@ class AIPLinter {
         const { stdout, stderr } = await exec(command).catch((err) => {
             return err;
         });
-
+        console.log(stdout)
+        console.log(stderr)
         // The output is given as a key-value pair, where 'err' 
         // represents that stderr is present and 'out' represents stdout.
         if (stderr !== "") {
@@ -84,11 +85,18 @@ class AIPLinter {
         // Check for the .api-linter file in project root. If found, 
         // point to the config file, configure the output of the 
         // command and point to the current .proto file that is open.
+        
+        // Gets the root of alis.exchange directory so it can be used 
+        // in the -I flag in the api-linter command. 
+        // The google/proto/.. is appended.
+        var pwd = vscode.workspace.workspaceFolders[0].uri.fsPath
+        var split_pwd = pwd.split('alis.exchange/')[0]
+        
         let command;
         if (fs.existsSync(apiPath + ".json")) {
-            command = `api-linter --config ${apiPath}.json --output-format "json" ${this.codeDocument.uri.fsPath}`  
+            command = `api-linter --config ${apiPath}.json --output-format "json" -I ${split_pwd}/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
         } else if (fs.existsSync(apiPath + '.yaml')) {
-            command = `api-linter --config ${apiPath}.yaml --output-format "json" ${this.codeDocument.uri.fsPath}`  
+            command = `api-linter --config ${apiPath}.yaml --output-format "json" -I /University/lutherrichards/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
         }
         
         // The .api-linter.json/yaml file not found. If not found, 
@@ -96,7 +104,7 @@ class AIPLinter {
         if (!command) {
             vscode.window.showErrorMessage("AIP Linter: Ensure you have .api-linter.json or .api-linter.yaml in the root directory of your project.")
             command = `api-linter --output-format "json" ${this.codeDocument.uri.fsPath}` 
-            return;
+            return command;
         }
         return command;
     }
@@ -119,11 +127,30 @@ class AIPLinter {
             if (!parsedError.reason && !parsedError.ruleDocURI && !parsedError.ruleID) {
                 return errors;
             }
-            const linterError = new VSCodeError(parsedError, this.codeDocument.lineAt(parsedError.lineNumber -1).range)
+            const linterError = new VSCodeError(parsedError, this.codeDocument.lineAt(parsedError.lineNumber -1).range, false)
             return errors.concat(linterError)
         }, []);
 
         return result;
+    }
+
+    /**
+     * Parses the raw output of the api-linter command.  
+     * The splits the output string and parses it individually. 
+     * The parsed problem is then made into a VSCodeError 
+     * @param {string} errorStr
+     */
+     parseErrors (errorStr) {
+        let splitSpr = errorStr.split(": ")
+        console.log(splitSpr)
+        // Include proto tin the regex so that the time is not matched.
+        var lineColRegEx = /proto:\d*:\d*/;
+        let lineCol = splitSpr[0].match(lineColRegEx)
+        var lineNumber = lineCol[0].split(":")[1]
+        const errParsed = new Error(Number(lineNumber), splitSpr[1] + ": " + splitSpr[2], "", "")
+        const err = new VSCodeError(errParsed, this.codeDocument.lineAt(errParsed.lineNumber -1).range, true)
+        console.log(err)
+        return err;
     }
 }
 

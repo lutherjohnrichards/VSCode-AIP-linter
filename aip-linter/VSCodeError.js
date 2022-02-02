@@ -8,10 +8,12 @@ class VSCodeError {
     /**
      * @param {Error} proto
      * @param {vscode.Range} range
+     * @param {Boolean} err
      */
-    constructor (proto, range) {
+    constructor (proto, range, err) {
         this.proto = proto;
         this.range = range;
+        this.err = err;
     }
 }
 
