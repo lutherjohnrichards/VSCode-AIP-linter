@@ -46,4 +46,4 @@ AIP spec contains rules for a lot of different platforms/languages, so users of 
       string anotherBadFieldName = 2;
   }
 ``` 
-
+- If the `.api-linter` file is not found in the project root, the default configurations are used and the proto files can only be configured by comments (not via the `.api-linter` file).
