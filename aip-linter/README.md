@@ -4,7 +4,7 @@ A linter plugin for Visual Studio Code that follows Google's AIP.
 The functionality is built using the executable at: https://linter.aip.dev/
 
 ## Notes
-AIP spec contains rules for a lot of different platforms/languages, so users of api-linter will want to have project specific linter config which might look like this:
+AIP spec contains rules for a lot of different platforms/languages, so users of the AIP Linter will want to have project specific linter config which might look like this:
 
 ```
 [
