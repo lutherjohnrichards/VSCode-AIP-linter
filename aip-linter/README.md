@@ -1,65 +1,49 @@
-# aip-linter README
+# VSCode-AIP-linter
+A linter plugin for Visual Studio Code that follows Google's AIP.
 
-This is the README for your extension "aip-linter". After writing up a brief description, we recommend including the following sections.
+The functionality is built using the executable at: https://linter.aip.dev/
 
-## Features
+## Notes
+AIP spec contains rules for a lot of different platforms/languages, so users of api-linter will want to have project specific linter config which might look like this:
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+```
+[
+  {
+    "disabled_rules": [
+      "all"
+    ],
+    "enabled_rules": [
+      "0158"
+    ],
+    "included_paths": [
+      "**/*"
+    ]
+  }
+]
+```
 
-For example if there is an image subfolder under your extension project workspace:
 
-\!\[feature X\]\(images/feature-x.png\)
+- The plugin requires that the `api-linter` be in the path.
+  - The `api-linter` can be installed with the following command: 
+  ```
+  go install github.com/googleapis/api-linter/cmd/api-linter@latest
+  ```
+- The plugin requires that there is either a `.api-linter.json` or `.api-linter.yaml` file in the project root.
+- In the case where one does want the entire project to be linted with the same rules enabled, one can disable certain rules using file comments. The usage is as follows:
+ ```
+  // A file comment:
+  // (-- api-linter: core::0140::lower-snake=disabled --)
+  //
+  // The above comment will disable the rule
+  // `core::0140::lower-snake` for the entire file.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+  syntax = "proto3";
 
-## Requirements
+  package google.api.linter.examples;
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+  message Example {
+      string badFieldName = 1;
+      string anotherBadFieldName = 2;
+  }
+``` 
+- If the `.api-linter` file is not found in the project root, the default configurations are used and the proto files can only be configured by comments (not via the `.api-linter` file).
