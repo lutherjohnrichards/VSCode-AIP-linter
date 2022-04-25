@@ -143,7 +143,7 @@ class AIPLinter {
         var lineColRegEx = /proto:\d*:\d*/;
         let lineCol = splitSpr[0].match(lineColRegEx)
         var lineNumber = lineCol[0].split(":")[1]
-        const errParsed = new Error(Number(lineNumber), splitSpr[1] + ": " + splitSpr[2], "", "")
+        const errParsed = new Error(Number(lineNumber), "api-linter error: api-linter executable exited with non-zero status. \n\n" + splitSpr[1] + ": " + splitSpr[2], "", "")
         const err = new VSCodeError(errParsed, this.codeDocument.lineAt(errParsed.lineNumber -1).range, true)
         console.log(err)
         return err;

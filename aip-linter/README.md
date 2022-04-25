@@ -1,7 +1,7 @@
 # VSCode-AIP-linter
-A linter plugin for Visual Studio Code that follows Google's AIP.
+A linter plugin for Visual Studio Code that follows Google's AIP. This plugin will only work for development within alis.exchange.
 
-The functionality is built using the executable at: https://linter.aip.dev/
+The functionality is provided by the executable at: https://linter.aip.dev/
 
 ## Notes
 AIP spec contains rules for a lot of different platforms/languages, so users of the AIP Linter will want to have project specific linter config which might look like this:
