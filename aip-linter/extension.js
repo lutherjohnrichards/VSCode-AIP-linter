@@ -106,7 +106,9 @@ async function driveLint(doc, collection) {
 	// map the errors detected to new vscode diagnostics which can then be mapped to the editor. 
 	// If there is an error, map a sever error warning. Else lint the style warnings detected.
 	const diagnostics = errors.map(err => {
-		return err.err ? new vscode.Diagnostic(err.range, err.proto.reason, vscode.DiagnosticSeverity.Error) : new vscode.Diagnostic(err.range, err.proto.reason + "\n" + err.proto.ruleID + "\n" + err.proto.ruleDocURI + "\nDisable: (-- api-linter: " + err.proto.ruleID + "=disabled --)", vscode.DiagnosticSeverity.Warning)
+		return err.err ? 
+		new vscode.Diagnostic(err.range, err.proto.reason, vscode.DiagnosticSeverity.Error) : 
+		new vscode.Diagnostic(err.range, err.proto.reason + "\n" + err.proto.ruleID + "\n" + err.proto.ruleDocURI + "\nDisable: (-- api-linter: " + err.proto.ruleID + "=disabled --)", vscode.DiagnosticSeverity.Warning)
 	});
 	
 	

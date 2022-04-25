@@ -59,8 +59,6 @@ class AIPLinter {
         const { stdout, stderr } = await exec(command).catch((err) => {
             return err;
         });
-        console.log(stdout)
-        console.log(stderr)
         // The output is given as a key-value pair, where 'err' 
         // represents that stderr is present and 'out' represents stdout.
         if (stderr !== "") {
@@ -77,8 +75,6 @@ class AIPLinter {
      * @returns command to be executed 
      */
     checkAIPExists () {
-        // var apiPath = __dirname + "/.api-linter"
-
         var apiPath = vscode.workspace.workspaceFolders[0].uri.fsPath + "/.api-linter";
         console.log(apiPath)
 
@@ -96,7 +92,7 @@ class AIPLinter {
         if (fs.existsSync(apiPath + ".json")) {
             command = `api-linter --config ${apiPath}.json --output-format "json" -I ${split_pwd}/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
         } else if (fs.existsSync(apiPath + '.yaml')) {
-            command = `api-linter --config ${apiPath}.yaml --output-format "json" -I /University/lutherrichards/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
+            command = `api-linter --config ${apiPath}.yaml --output-format "json" -I ${split_pwd}/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
         }
         
         // The .api-linter.json/yaml file not found. If not found, 

@@ -1,5 +1,6 @@
 {
   "name": "aip-linter",
+  "publisher": "aoca",
   "displayName": "AIP Linter",
   "description": "",
   "version": "0.0.1",
