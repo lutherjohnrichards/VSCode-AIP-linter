@@ -59,7 +59,7 @@ class AIPLinter {
         const { stdout, stderr } = await exec(command).catch((err) => {
             return err;
         });
-        // The output is given as a key-value pair, where 'err' 
+        // The output is given as a value-key pair, where 'err' 
         // represents that stderr is present and 'out' represents stdout.
         if (stderr !== "") {
             return [stderr, "err"];
@@ -76,8 +76,6 @@ class AIPLinter {
      */
     checkAIPExists () {
         var apiPath = vscode.workspace.workspaceFolders[0].uri.fsPath + "/.api-linter";
-        console.log(apiPath)
-
         // Check for the .api-linter file in project root. If found, 
         // point to the config file, configure the output of the 
         // command and point to the current .proto file that is open.
@@ -87,12 +85,13 @@ class AIPLinter {
         // The google/proto/.. is appended.
         var pwd = vscode.workspace.workspaceFolders[0].uri.fsPath
         var split_pwd = pwd.split('alis.exchange/')[0]
-        
         let command;
         if (fs.existsSync(apiPath + ".json")) {
-            command = `api-linter --config ${apiPath}.json --output-format "json" -I ${split_pwd}/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
+            // command = `api-linter --config ${apiPath}.json --output-format "json" -I ${split_pwd}/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
+            command = `api-linter --config ${apiPath}.yaml --output-format "json" -I ${pwd} -I ${split_pwd}/alis.exchange/google/proto/ ${this.codeDocument.uri.fsPath}`  
         } else if (fs.existsSync(apiPath + '.yaml')) {
-            command = `api-linter --config ${apiPath}.yaml --output-format "json" -I ${split_pwd}/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
+            // command = `api-linter --config ${apiPath}.yaml --output-format "json" -I ${split_pwd}/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
+            command = `api-linter --config ${apiPath}.yaml --output-format "json" -I ${pwd} -I ${split_pwd}/alis.exchange/google/proto/ ${this.codeDocument.uri.fsPath}`  
         }
         
         // The .api-linter.json/yaml file not found. If not found, 
@@ -136,10 +135,9 @@ class AIPLinter {
      * The parsed problem is then made into a VSCodeError 
      * @param {string} errorStr
      */
-     parseErrors (errorStr) {
+    parseErrors (errorStr) {
         let splitSpr = errorStr.split(": ")
-        console.log(splitSpr)
-        // Include proto tin the regex so that the time is not matched.
+        // Include proto in the regex so that the time is not matched.
         var lineColRegEx = /proto:\d*:\d*/;
         let lineCol = splitSpr[0].match(lineColRegEx)
         var lineNumber = lineCol[0].split(":")[1]

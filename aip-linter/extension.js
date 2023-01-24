@@ -73,8 +73,6 @@ function deactivate() {}
  */
 function runAPILint () {
 	let editor = vscode.window.activeTextEditor;
-	
-	console.log("PATH: " + editor.document.uri.fsPath)
 	// Check if the active text editor is found.
 	if (!editor) {
 		vscode.window.showInformationMessage("Editor not detected")

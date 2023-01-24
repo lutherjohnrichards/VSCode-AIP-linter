@@ -2,19 +2,24 @@
   "name": "aip-linter",
   "publisher": "aoca",
   "displayName": "AIP Linter",
-  "description": "",
-  "version": "0.0.1",
+  "description": "A linter plugin for Visual Studio Code that follows Google's AIP.",
+  "version": "2.0.1",
   "engines": {
     "vscode": "^1.63.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Linters"
   ],
+  "icon": "iconsmall.png",
   "keywords": [
     "proto",
     "protocol buffer",
     "protobuf",
-    "lint"
+    "linter",
+    "api",
+    "aip",
+    "aip-linter"
   ],
   "activationEvents": [
     "onLanguage:proto3",
@@ -46,4 +51,3 @@
     "typescript": "^4.5.4"
   }
 }
-
