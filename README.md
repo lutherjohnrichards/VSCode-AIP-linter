@@ -1,5 +1,5 @@
 # VSCode-AIP-linter
-A linter plugin for Visual Studio Code that follows Google's AIP, built for use with Alis Exchange (https://alisx.com/).
+A linter plugin for Visual Studio Code that follows Google's AIP, built for use with Alis Exchange (https://alisx.com/). The plugin can be found here(https://marketplace.visualstudio.com/items?itemName=aoca.aip-linter) or searched for in VS Code.
 
 The functionality is built using the executable at: https://linter.aip.dev/ and follows Google's API Improvement Proposals defined here (https://google.aip.dev/). The goal is to assist the deisng of APIs using Google's API design decisions, and provide a framework and system for others to document their own API design rules and practices.
 
