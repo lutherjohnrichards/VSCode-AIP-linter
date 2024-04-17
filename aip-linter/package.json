@@ -25,7 +25,7 @@
     "onLanguage:proto3",
     "onLanguage:proto"
   ],
-  "main": "./extension.js",
+  "main": "./VSCodeExtension.js",
   "contributes": {
     "commands": [
       {

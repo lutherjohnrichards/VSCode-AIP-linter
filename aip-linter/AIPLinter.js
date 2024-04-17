@@ -88,7 +88,7 @@ class AIPLinter {
         let command;
         if (fs.existsSync(apiPath + ".json")) {
             // command = `api-linter --config ${apiPath}.json --output-format "json" -I ${split_pwd}/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
-            command = `api-linter --config ${apiPath}.yaml --output-format "json" -I ${pwd} -I ${split_pwd}/alis.exchange/google/proto/ ${this.codeDocument.uri.fsPath}`  
+            command = `api-linter --config ${apiPath}.json --output-format "json" -I ${pwd} -I ${split_pwd}/alis.exchange/google/proto/ ${this.codeDocument.uri.fsPath}`  
         } else if (fs.existsSync(apiPath + '.yaml')) {
             // command = `api-linter --config ${apiPath}.yaml --output-format "json" -I ${split_pwd}/alis.exchange/google/proto ${this.codeDocument.uri.fsPath}`  
             command = `api-linter --config ${apiPath}.yaml --output-format "json" -I ${pwd} -I ${split_pwd}/alis.exchange/google/proto/ ${this.codeDocument.uri.fsPath}`  
